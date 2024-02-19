@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exemplo HTML2Canvas</title>
+<script src="html2canvas.js"></script>
+<style>
+    /* Estilos CSS */
+    #capture {
+        position: relative;
+    }
+    .casaimg {
+        max-width: 100%;
+    }
+    #balaoimovelguide {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 5px 10px;
+    }
+</style>
+</head>
+<body>
+<div class="capture" id="capture">
+    <img src="casaimg.jpeg" alt="">               
+    <p id="balaoimovelguide">Guia do Imóvel</p>
+</div>
+<button id="seu-botao">BAIXAR</button>
+
+<script>
+    // JavaScript
+    document.getElementById("seu-botao").addEventListener("click", function() {
+        html2canvas(document.querySelector("#capture"), { 
+            useCORS: true,
+            allowTaint: true
+        }).then(canvas => {
+            // Criar link de download
+            const link = document.createElement("a");
+            link.href = canvas.toDataURL("image/png"); // Converte em PNG
+            link.download = "captura.png";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    });
+</script>
+</body>
+</html>
